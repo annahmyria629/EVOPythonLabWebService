@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enter your name</title>
+    <link rel= "stylesheet" type= "text/css" href="static/style.css">
+</head>
+<body>
+    <div class="form">
+        <form method="POST" action="/">
+            {{ form.csrf_token }}
+            {{ form.name.label }} {{ form.name(size=30) }}
+            {{ form.submit }}
+        </form>
+    </div>
+    <a href="{{ url_for('all_users') }}">All users</a>
+</form>
+</body>
+</html>
