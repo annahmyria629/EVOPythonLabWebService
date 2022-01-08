@@ -7,6 +7,14 @@ app = Flask(__name__)
 app.secret_key = "some secret string"
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("not_found.html")
+
+
+app.register_error_handler(404, page_not_found)
+
+
 class MyForm(FlaskForm):
     name = StringField('Name and Surname:', validators=[DataRequired()])
     submit = SubmitField(label="Say hello!")
@@ -41,6 +49,8 @@ def index():
 def all_users():
     all_u = session.get("users")
     return render_template("all_users.html", all_users=all_u)
+
+
 
 
 if __name__ == '__main__':
