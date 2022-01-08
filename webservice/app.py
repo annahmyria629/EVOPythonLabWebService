@@ -51,7 +51,5 @@ def all_users():
     return render_template("all_users.html", all_users=all_u)
 
 
-
-
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000)
+    app.run(host='0.0.0.0', port=5000)
