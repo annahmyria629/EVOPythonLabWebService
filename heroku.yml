@@ -1,5 +1,10 @@
 build:
   docker:
     web: Dockerfile
+    worker: Dockerfile
 run:
-  web: gunicorn wsgi:app
+  web:
+    command:
+      - gunicorn wsgi:app
+    image:
+      web
