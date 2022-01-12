@@ -43,4 +43,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/mywebservicetest:$(git rev-parse --short "$GITHUB_SHA")
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/mywebservicetest:${GITHUB_SHA::8}
