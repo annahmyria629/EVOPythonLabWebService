@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel= "stylesheet" type= "text/css" href="static/style.css">
+    <title>Hello</title>
 </head>
 <body>
     <h3>{{ greeting }}</h3>
-    {% for item in items %}
-        <p style="font-size: 24px">{{ item }}</p>
-    {% endfor %}
+<!--    {% for item in items %}-->
+<!--        <p style="font-size: 24px">{{ item }}</p>-->
+<!--    {% endfor %}-->
     <a href="{{ url_for('index') }}">Back to form</a>
 </body>
 </html>

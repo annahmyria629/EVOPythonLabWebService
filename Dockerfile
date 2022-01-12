@@ -1,8 +1,13 @@
 FROM python:3.8-alpine
-WORKDIR /EVOPythonLabWebService
 COPY . /EVOPythonLabWebService
+WORKDIR /EVOPythonLabWebService
+
 RUN pip install -r requirements.txt
-WORKDIR webservice/
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "--log-level=debug", "wsgi:app"]
+
+
+CMD ["gunicorn", "-b", "0.0.0.0:5000","wsgi:app"]
+#ENTRYPOINT [ "python" ]
+
+#CMD ["wsgi.py"]
+#CMD ["gunicorn", "-b", "0.0.0.0:5000", " --chdir", "EVOPythonLabWebService/webservice", "wsgi:app"]
 #CMD ["python", "webservice/app.py"]
-EXPOSE 5000

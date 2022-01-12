@@ -2,7 +2,10 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
+import os
 
+
+port = int(os.getenv("PORT", 5000))
 app = Flask(__name__)
 app.secret_key = "some secret string"
 
@@ -52,4 +55,5 @@ def all_users():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    port = int(os.getenv("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
