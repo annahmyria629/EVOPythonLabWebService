@@ -15,8 +15,6 @@ on:
 
 env:
   IMAGE_NAME: "mywebservicetest"
-  COMMIT_HASH: $(echo GITHUB_SHA)
-  A: $(echo $GITHUB_SHA | head -c7)
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -50,4 +48,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/mywebservicetest:${ GITHUB_SHA }
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/$(echo $IMAGE_NAME):$(git rev-parse --short "$GITHUB_SHA")
