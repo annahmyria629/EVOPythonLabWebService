@@ -48,4 +48,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/$(echo $IMAGE_NAME):$(git rev-parse --short "$GITHUB_SHA")
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/$(echo $IMAGE_NAME):latest
