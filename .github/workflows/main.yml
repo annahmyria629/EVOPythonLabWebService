@@ -15,6 +15,7 @@ on:
 
 env:
   IMAGE_NAME: "mywebservicetest"
+  CONTAINER_NAME: "my_container"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -53,11 +54,12 @@ jobs:
     
     steps:
       -
-        name: Login into DigitalOcean Server
+        name: Login into DigitalOcean Server and drop old image
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
-            docker images
+            docker ps -a -f since=${{ env.CONTAINER_NAME }}
+  
