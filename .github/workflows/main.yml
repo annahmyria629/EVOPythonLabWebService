@@ -64,8 +64,5 @@ jobs:
             docker stop ${{ env.IMAGE_NAME }}
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
             # Run a new container from a new image
-            docker run -d \
-            --publish 5000:5000 \
-            --name ${{ env.IMAGE_NAME }} \ 
-            ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+            docker run -d --publish 5000:5000 --name ${{ env.IMAGE_NAME }} ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
   
