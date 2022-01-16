@@ -68,5 +68,6 @@ jobs:
             docker run -d \
             --publish 5000:5000 \
             --name ${{ env.IMAGE_NAME }} \
+            - v ${{ secrets.DATABASE_URL}}:/web/workdb.db
             ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
   
