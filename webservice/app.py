@@ -32,10 +32,10 @@ def hello(name):
             tmp = session.get("users")
             tmp.append(name)
             session["users"] = tmp
-            return render_template("hello.html", greeting=f"Hello {name}", items=session.get("users"))
+            return render_template("hello.html", greeting=f"Hello, {name}", items=session.get("users"))
     else:
         session["users"] = [name]
-        return render_template("hello.html", greeting=f"Hello {name}", items=session.get("users"))
+        return render_template("hello.html", greeting=f"Hello, {name}", items=session.get("users"))
 
 
 @app.route("/", methods=["GET", "POST"])
