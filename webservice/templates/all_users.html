@@ -12,13 +12,18 @@
     <title>All users</title>
 </head>
 <body>
+<div class="main-container">
     <div class="users-list">
         <h3>List of already greeted users</h3>
         <ul>
             {% for item in all_users %}
-                <li>{{ item }}</li>
+                <li>{{ item.name }}</li>
             {% endfor %}
         </ul>
     </div>
+    <div class="btn btn-lg btn-primary all-users-button" role="button" data-bs-toggle="button">
+        <a href="{{ url_for('index') }}">Back to main page</a>
+    </div>
+</div>
 </body>
 </html>
