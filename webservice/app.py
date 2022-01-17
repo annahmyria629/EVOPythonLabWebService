@@ -28,7 +28,7 @@ app.register_error_handler(404, page_not_found)
 
 class MyForm(FlaskForm):
     name = StringField('Name and Surname:', validators=[DataRequired(),
-                                                        Regexp("^[a-zA-Z]+$",
+                                                        Regexp("^[a-zA-Z ]+$",
                                                                message="Field must contain only letters")],
                        render_kw={"onfocus": "this.value=''; document.querySelector('span').hidden = true;"})
     submit = SubmitField(label="Say hello!")
