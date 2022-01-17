@@ -1,13 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Regexp
 import os
 from webservice.config import Config
 from webservice.db import Base, Users
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -17,9 +16,6 @@ Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 db_session = DBSession()
-# app.config.from_mapping(config)
-# cache = Cache(app)
-# Session(app)
 
 
 @app.errorhandler(404)
@@ -31,7 +27,10 @@ app.register_error_handler(404, page_not_found)
 
 
 class MyForm(FlaskForm):
-    name = StringField('Name and Surname:', validators=[DataRequired()])
+    name = StringField('Name and Surname:', validators=[DataRequired(),
+                                                        Regexp("^[a-zA-Z]+$",
+                                                               message="Field must contain only letters")],
+                       render_kw={"onfocus": "this.value=''; document.querySelector('span').hidden = true;"})
     submit = SubmitField(label="Say hello!")
 
 

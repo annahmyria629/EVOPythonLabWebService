@@ -70,3 +70,14 @@ p{
     margin: 30px;
     font-size: 15px;
 }
+
+span.errtext {
+	margin-bottom: 1px;
+    color: red;
+    font-size: 10px;
+}
+
+.name-input{
+    display: flex;
+    flex-direction: column;
+}

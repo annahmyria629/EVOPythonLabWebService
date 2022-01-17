@@ -21,6 +21,9 @@
             </div>
             <div class="name-input">
                 {{ form.name }}
+                {% if form.name.errors %}
+                    <span class="errtext" id="err_1">{{ form.name.errors[0] }}</span>
+                {% endif %}
             </div>
             <div class="submit-button">
                 {{ form.submit }}
