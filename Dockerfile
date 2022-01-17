@@ -1,6 +1,6 @@
 FROM python:3.8-alpine
-COPY . /EVOPythonLabWebService
-WORKDIR /EVOPythonLabWebService
+WORKDIR /web
+COPY . .
 
 RUN pip install -r requirements.txt
 

@@ -1,13 +1,21 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Regexp
 import os
+from webservice.config import Config
+from webservice.db import Base, Users
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
-
-port = int(os.getenv("PORT", 5000))
 app = Flask(__name__)
-app.secret_key = "some secret string"
+app.config.from_object(Config)
+
+engine = create_engine(app.config["DATABASE_URI"])
+Base.metadata.bind = engine
+
+DBSession = sessionmaker(bind=engine)
+db_session = DBSession()
 
 
 @app.errorhandler(404)
@@ -19,38 +27,39 @@ app.register_error_handler(404, page_not_found)
 
 
 class MyForm(FlaskForm):
-    name = StringField('Name and Surname:', validators=[DataRequired()])
+    name = StringField('Name and Surname:', validators=[DataRequired(),
+                                                        Regexp("^[a-zA-Z ]+$",
+                                                               message="Field must contain only letters")],
+                       render_kw={"onfocus": "this.value=''; document.querySelector('span').hidden = true;"})
     submit = SubmitField(label="Say hello!")
 
 
 @app.route("/hello/<name>")
 def hello(name):
-    if "users" in session:
-        if name in session.get("users"):
-            return render_template("hello.html", greeting="We have already greeted", items=session.get("users"))
-        else:
-            tmp = session.get("users")
-            tmp.append(name)
-            session["users"] = tmp
-            return render_template("hello.html", greeting=f"Hello, {name}", items=session.get("users"))
+    app.logger.warning(request.url)
+    user = db_session.query(Users).filter_by(name=name).all()
+    if user:
+        return render_template("hello.html", greeting="We have already greeted")
     else:
-        session["users"] = [name]
-        return render_template("hello.html", greeting=f"Hello, {name}", items=session.get("users"))
+        db_session.add(Users(name=name))
+        db_session.commit()
+        return render_template("hello.html", greeting=f"Hello, {name}")
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    app.logger.warning(request.url)
     form = MyForm()
     if request.method == "POST":
         if form.validate_on_submit():
-            f = form
             return redirect(url_for('hello', name=form.data["name"]))
     return render_template("index.html", form=form)
 
 
 @app.route("/all_users")
 def all_users():
-    all_u = session.get("users")
+    app.logger.warning(request.url)
+    all_u = db_session.query(Users).all()
     return render_template("all_users.html", all_users=all_u)
 
 

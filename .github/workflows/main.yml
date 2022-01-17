@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [ test ]
   pull_request:
-    branches: [ main ]
+    branches: [ test ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -61,6 +61,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
+            echo "var is ${{ secrets.DATABASE_URI }}"
             docker stop ${{ env.IMAGE_NAME }}
             docker rm ${{ env.IMAGE_NAME }}
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
@@ -68,5 +69,5 @@ jobs:
             docker run -d \
             --publish 5000:5000 \
             --name ${{ env.IMAGE_NAME }} \
+            -v ${{ secrets.DATABASE_URI }}:/web/workdb.db \
             ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
-  

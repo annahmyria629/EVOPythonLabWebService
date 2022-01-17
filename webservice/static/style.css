@@ -52,6 +52,9 @@ a:hover{
 input[type=submit]{
     font-size: 20px;
 }
+input[type=text]{
+    color: black;
+}
 
 .greeting{
     margin: 50px;
@@ -61,9 +64,20 @@ p{
 }
 
 .users-list{
-    display: flex;
-    flex-direction: column;
+    display: block;
+    /*flex-direction: column;*/
     justify-content: flex-start;
     margin: 30px;
     font-size: 15px;
+}
+
+span.errtext {
+	margin-bottom: 1px;
+    color: red;
+    font-size: 10px;
+}
+
+.name-input{
+    display: flex;
+    flex-direction: column;
 }
